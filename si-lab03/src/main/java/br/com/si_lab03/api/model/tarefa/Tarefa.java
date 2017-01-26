@@ -1,10 +1,12 @@
-package br.com.si_lab03.api.model;
+package br.com.si_lab03.api.model.tarefa;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 
 @Entity
 public class Tarefa {
