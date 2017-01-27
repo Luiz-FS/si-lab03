@@ -3,10 +3,6 @@ package br.com.si_lab03.api.model.tarefa;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 
 @Entity
 public class Tarefa {
@@ -15,11 +11,11 @@ public class Tarefa {
 	private Integer id;
 	private String descricao;
 	
-	@ManyToOne
-	@JoinColumn
-	private ListaDeTarefas listaDeTarefas;
-	
 	public Tarefa() {
+	}
+	
+	public Tarefa(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Integer getId() {
@@ -37,14 +33,40 @@ public class Tarefa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public ListaDeTarefas getListaDeTarefas() {
-		return listaDeTarefas;
-	}
-
-	public void setListaDeTarefas(ListaDeTarefas listaDeTarefas) {
-		this.listaDeTarefas = listaDeTarefas;
-	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tarefa other = (Tarefa) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		
+		String saida = this.descricao + "-" + this.id;
+		
+		return saida;
+	}
 	
 }

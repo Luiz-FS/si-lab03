@@ -1,6 +1,5 @@
 package br.com.si_lab03.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,41 +18,59 @@ import br.com.si_lab03.api.model.tarefa.Tarefa;
 
 @RestController
 public class ListaDeTarefasController {
-	
+
 	@Autowired
 	private OperacoesComBanco operacoesComBanco;
-	
+
 	public ListaDeTarefasController() {
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/listas", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ListaDeTarefas>> buscarTodasAsListas() {
-		
+
 		List<ListaDeTarefas> listas = operacoesComBanco.buscarTodasAsListas();
-		
+
 		return new ResponseEntity<>(listas, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method=RequestMethod.POST, value="/listas", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ListaDeTarefas> salvarLista(@RequestBody ListaDeTarefas listaDeTarefas) {
-		
-		List<Tarefa> t = new ArrayList<>();
-		
-		
-		ListaDeTarefas lista = operacoesComBanco.salvar(listaDeTarefas);
-		
-		return new ResponseEntity<>(lista, HttpStatus.OK);
+
+		ListaDeTarefas listaSalva = operacoesComBanco.salvarListaDeTarefa(listaDeTarefas);
+
+		return new ResponseEntity<>(listaSalva, HttpStatus.OK);
+	}
+
+	@RequestMapping(method=RequestMethod.POST, value="/listas/{idLista}", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Tarefa> salvarTarefa(@PathVariable Integer idLista, @RequestBody Tarefa tarefa) {
+
+		Tarefa tarefaSalva = operacoesComBanco.salvarTarefa(idLista, tarefa);
+
+		if (tarefaSalva != null)
+			return new ResponseEntity<>(tarefaSalva, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{id}")
-	public ResponseEntity<ListaDeTarefas> deletarLista(@PathVariable Integer id) {
-		
-		boolean deletou = operacoesComBanco.deletar(id);
-		
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{idLista}/{idTarefa}")
+	public ResponseEntity<Tarefa> deletarTarefa(@PathVariable Integer idLista, @PathVariable Integer idTarefa) {
+
+		boolean deletou = operacoesComBanco.deletarTarefa(idLista, idTarefa);
+
 		if (deletou)
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{id}")
+	public ResponseEntity<ListaDeTarefas> deletarLista(@PathVariable Integer id) {
+
+		boolean deletou = operacoesComBanco.deletarListaDeTarefa(id);
+
+		if (deletou)
+			return new ResponseEntity<>(HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 }

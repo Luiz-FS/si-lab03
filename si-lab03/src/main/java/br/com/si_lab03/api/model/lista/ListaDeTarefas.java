@@ -17,12 +17,50 @@ public class ListaDeTarefas {
 	@Id @GeneratedValue
 	private Integer id;
 	private String nome;
-	
-	@OneToMany(mappedBy="listaDeTarefas", cascade=CascadeType.ALL)
+
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Tarefa> tarefas;
-	
+
 	public ListaDeTarefas() {
 		this.tarefas = new ArrayList<>();
+	}
+
+	public void adicionarTarefa(Tarefa tarefa) {
+		this.tarefas.add(tarefa);
+	}
+
+	public Tarefa buscarTarefa(Tarefa tarefa) {
+
+		int indexTarefa = this.tarefas.indexOf(tarefa);
+
+		if (indexTarefa >= 0)
+			return this.tarefas.get(indexTarefa);	
+		else 
+			return null;
+
+	}
+
+	public Tarefa buscarTarefaPorId(Integer id) {
+
+		for (Tarefa tarefa : this.tarefas) {
+
+			if(tarefa.getId().equals(id))
+				return tarefa;
+		}
+
+		return null;
+	}
+
+	public boolean deletarTarefa(Integer id) {
+
+		Tarefa tarefaEncontrada = buscarTarefaPorId(id);
+
+		if (tarefaEncontrada != null) {
+			this.tarefas.remove(tarefaEncontrada);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public Integer getId() {
@@ -48,6 +86,55 @@ public class ListaDeTarefas {
 	public void setTarefas(List<Tarefa> tarefas) {
 		this.tarefas = tarefas;
 	}
-	
-	
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((tarefas == null) ? 0 : tarefas.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ListaDeTarefas other = (ListaDeTarefas) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (tarefas == null) {
+			if (other.tarefas != null)
+				return false;
+		} else if (!tarefas.equals(other.tarefas))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+
+		String saida = this.nome + "-" + this.id +"\n";
+
+		for(Tarefa tarefa : this.tarefas) {
+			saida += tarefa + "\n";
+		}
+
+		return saida;
+	}
 }
