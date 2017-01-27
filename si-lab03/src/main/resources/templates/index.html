@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt" ng-app="agendaDeTarefas">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Agenda de tarefas</title>
+        <link rel="icon" type="image/ico" href="./css/icone.ico"/>
+
+        <script src="./js/angular.js"></script>
+        <script src="./js/jquery.js"></script>
+        <script src="./js/bootstrap.js"></script>
+        <script src="./js/funcoes.js"></script>
+
+
+        <link rel="stylesheet" href="./css/bootstrap.css"/>
+        <link rel="stylesheet" href="./css/style.css"/>
+        <link rel="stylesheet" href="./css/glyphicon.css"/>
+
+    </head>
+
+    <body ng-controller="agendaDetarefasCtrl" id="palnoDeFundo">
+
+        <div id="interface">
+
+            <nav>
+
+                <h1 class="titulo">{{app}}</h1>
+
+                <ul id="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="https://github.com/Luiz-FS" target="_blank">Sobre</a></li>
+                </ul>
+
+            </nav>
+
+            <div class="jumbotron">
+
+                <div id="form">
+
+                    <input class="form-control" type="text" ng-model="tarefa.nome" placeholder="Tarefa..."/>
+
+                    <button class="btn btn-primary btn-block" ng-click="adicionaTarefa(tarefa)" ng-disabled="!tarefa.nome">Adicionar Tarefa</button>
+                    <button class="btn btn-danger btn-block" ng-click="limparTarefas()" ng-disabled="tarefas.length == 0">Limpar Tarefas</button>
+
+                </div>
+
+                <div id="controladorDeTarefas">
+
+                    <input class="form-control busca" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
+
+                    <select class="form-control filtro" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
+
+                        <option value="">Filtrar por...</option>
+
+                    </select>
+
+                    <div id="box">
+
+                        <div id="sombreado" ng-repeat="tarefa in tarefas | filter:{nome: criterioDeBusca}
+                            | filter:{concluida: filtroTarefas(select)}">
+
+                            <div ng-class="{concluida: tarefa.concluida, naoConcluida: !tarefa.concluida}">
+
+                                <div id="checkeBox" ng-click="marcarOudesmarcarConcluida(tarefa)"><span class="glyphicon glyphicon-ok" ng-show="tarefa.concluida"></span></div>
+
+                                <div id="nomeTarefa" ng-click="abrirTarefa(tarefa)">
+                                    <p>{{tarefa.nome}}</p>
+                                </div>
+
+                            </div>
+
+                            <div id="trash" ng-click="remove(tarefa)">
+                                <span class="glyphicon glyphicon-trash remover"></span>
+                            </div>
+
+                        </div>
+
+                        <p id="tarefasVazias" ng-show="tarefas.length == 0">Não há tarefas a serem realizadas</p>
+
+                    </div>
+
+                </div>
+
+                <div class="text-xs-center" id="example-caption-6">Progresso das tarefas&hellip; {{calculaPorcentagem(tarefas) + "%"}}</div>
+                <div id="progressBar">
+
+                    <div id="progressConcluida" style="{{'width:' + calculaPorcentagem(tarefas) + '%'}}"></div>
+                    <div id="progressNaoOcncluida" style="{{'width:' + (MAXIMO_PERCENTUAL - calculaPorcentagem(tarefas)) + '%'}}"></div>
+
+                </div>
+
+            </div>
+
+            <footer>
+                <h5 class="creditos">Copyright © Luiz Fernando da Silva</h5>
+            </footer>
+            
+        </div>
+
+        <div id="tarefa-visualizacao" class="visualizacao">
+
+            <div class="caixa-dialogo">
+
+                <div class="titulo-dialogo">
+
+                    <span class="fechar">&times;</span>
+                    <h2>Gerenciador de Tarefa</h2>
+
+                </div>
+
+                <div class="corpo-texto">
+
+                    <p><span class="atributo">Tarefa: </span>{{tarefaAtual.nome}}</p>
+                    <p><span class="atributo">Data: </span>25/08/1997</p>
+
+                    <div id="botoes">
+
+                        <button id="editar">Editar</button>
+                        <button id="salvar">Salvar</button>
+                        <button id="cancelar">Cancelar</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>
