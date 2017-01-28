@@ -7,11 +7,18 @@ import javax.persistence.Id;
 @Entity
 public class Tarefa {
 	
+	public enum Prioridade {
+		ALTA,MEDIA,BAIXA;
+	}
+	
 	@Id @GeneratedValue
 	private Integer id;
 	private String descricao;
+	private boolean concluida;
+	private Prioridade prioridade;
 	
 	public Tarefa() {
+		this.concluida = false;
 	}
 	
 	public Tarefa(String descricao) {
@@ -34,7 +41,21 @@ public class Tarefa {
 		this.descricao = descricao;
 	}
 	
-	
+	public boolean isConcluida() {
+		return concluida;
+	}
+
+	public void setConcluida(boolean concluida) {
+		this.concluida = concluida;
+	}
+
+	public Prioridade getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(Prioridade prioridade) {
+		this.prioridade = prioridade;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -68,5 +89,4 @@ public class Tarefa {
 		
 		return saida;
 	}
-	
 }

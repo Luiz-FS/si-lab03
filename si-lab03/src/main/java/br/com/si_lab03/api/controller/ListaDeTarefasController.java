@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.si_lab03.api.controller.operacoes.OperacoesComBanco;
 import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 import br.com.si_lab03.api.model.tarefa.Tarefa;
+import br.com.si_lab03.api.model.tarefa.Tarefa.Prioridade;
 
 @RestController
 public class ListaDeTarefasController {
@@ -35,7 +36,7 @@ public class ListaDeTarefasController {
 
 	@RequestMapping(method=RequestMethod.POST, value="/listas", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ListaDeTarefas> salvarLista(@RequestBody ListaDeTarefas listaDeTarefas) {
-
+		
 		ListaDeTarefas listaSalva = operacoesComBanco.salvarListaDeTarefa(listaDeTarefas);
 
 		return new ResponseEntity<>(listaSalva, HttpStatus.OK);
@@ -72,5 +73,13 @@ public class ListaDeTarefasController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value="/listas/prioridades", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Prioridade[]> buscarListasPrioridades() {
+
+		Prioridade[] listas = Prioridade.values();
+
+		return new ResponseEntity<>(listas, HttpStatus.OK);
 	}
 }

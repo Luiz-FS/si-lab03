@@ -27,24 +27,42 @@
                 <h1 class="titulo">{{app}}</h1>
 
                 <ul id="menu">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="https://github.com/Luiz-FS" target="_blank">Sobre</a></li>
                 </ul>
 
             </nav>
 
             <div class="jumbotron">
+            
+            	<h2>{{listaDeTarefasSelecionada.nome}}</h2>
 
                 <div id="form">
 
-                    <input class="form-control" type="text" ng-model="tarefa.nome" placeholder="Tarefa..."/>
+					<form name="formTarefa">
+					
+                    	<input class="form-control" type="text" name="txtDescricao" ng-model="tarefa.descricao" placeholder="Tarefa..." ng-required="true"/>
+                    
+                    	<select class="form-control filtro" ng-model="tarefa.prioridade" ng-options="prioridade for prioridade in prioridades" ng-required="true">	
 
-                    <button class="btn btn-primary btn-block" ng-click="adicionaTarefa(tarefa)" ng-disabled="!tarefa.nome">Adicionar Tarefa</button>
+                        	<option value="">Prioridade...</option>
+
+                    	</select>
+
+                    	<button class="btn btn-primary btn-block" ng-click="adicionaTarefa(tarefa)" ng-disabled="formTarefa.$invalid">Adicionar Tarefa</button>
+                    </form>
+                    
                     <button class="btn btn-danger btn-block" ng-click="limparTarefas()" ng-disabled="tarefas.length == 0">Limpar Tarefas</button>
 
                 </div>
 
                 <div id="controladorDeTarefas">
+                
+                	<select class="form-control" ng-model="selLista" ng-click="selecionarListaDetarefa(selLista)" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
+
+                    	<option value="">Prioridade...</option>
+
+                  	</select>
 
                     <input class="form-control busca" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
 
@@ -56,7 +74,7 @@
 
                     <div id="box">
 
-                        <div id="sombreado" ng-repeat="tarefa in tarefas | filter:{nome: criterioDeBusca}
+                        <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao: criterioDeBusca}
                             | filter:{concluida: filtroTarefas(select)}">
 
                             <div ng-class="{concluida: tarefa.concluida, naoConcluida: !tarefa.concluida}">
@@ -64,7 +82,7 @@
                                 <div id="checkeBox" ng-click="marcarOudesmarcarConcluida(tarefa)"><span class="glyphicon glyphicon-ok" ng-show="tarefa.concluida"></span></div>
 
                                 <div id="nomeTarefa" ng-click="abrirTarefa(tarefa)">
-                                    <p>{{tarefa.nome}}</p>
+                                    <p>{{tarefa.descricao}}</p>
                                 </div>
 
                             </div>
@@ -75,17 +93,17 @@
 
                         </div>
 
-                        <p id="tarefasVazias" ng-show="tarefas.length == 0">Não há tarefas a serem realizadas</p>
+                        <p id="tarefasVazias" ng-show="listaDeTarefasSelecionada.tarefas.length == 0">Não há tarefas a serem realizadas</p>
 
                     </div>
 
                 </div>
 
-                <div class="text-xs-center" id="example-caption-6">Progresso das tarefas&hellip; {{calculaPorcentagem(tarefas) + "%"}}</div>
+                <div class="text-xs-center" id="example-caption-6">Progresso das tarefas&hellip; {{calculaPorcentagem(listaDeTarefasSelecionada.tarefas) + "%"}}</div>
                 <div id="progressBar">
 
-                    <div id="progressConcluida" style="{{'width:' + calculaPorcentagem(tarefas) + '%'}}"></div>
-                    <div id="progressNaoOcncluida" style="{{'width:' + (MAXIMO_PERCENTUAL - calculaPorcentagem(tarefas)) + '%'}}"></div>
+                    <div id="progressConcluida" style="{{'width:' + calculaPorcentagem(listaDeTarefasSelecionada.tarefas) + '%'}}"></div>
+                    <div id="progressNaoOcncluida" style="{{'width:' + (MAXIMO_PERCENTUAL - calculaPorcentagem(listaDeTarefasSelecionada.tarefas)) + '%'}}"></div>
 
                 </div>
 
@@ -110,7 +128,8 @@
 
                 <div class="corpo-texto">
 
-                    <p><span class="atributo">Tarefa: </span>{{tarefaAtual.nome}}</p>
+                    <p><span class="atributo">Tarefa: </span>{{tarefaAtual.descricao}}</p>
+                    <p><span class="atributo">Prioridade: </span>{{tarefaAtual.prioridade}}</p>
                     <p><span class="atributo">Data: </span>25/08/1997</p>
 
                     <div id="botoes">
