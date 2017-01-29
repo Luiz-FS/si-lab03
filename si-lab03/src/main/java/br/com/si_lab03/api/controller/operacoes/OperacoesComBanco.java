@@ -8,12 +8,16 @@ import org.springframework.stereotype.Component;
 import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 import br.com.si_lab03.api.model.tarefa.Tarefa;
 import br.com.si_lab03.api.repository.ListaDeTarefasRepositorio;
+import br.com.si_lab03.api.repository.TarefaRepositorio;
 
 @Component
 public class OperacoesComBanco {
 
 	@Autowired
 	private ListaDeTarefasRepositorio listaDeTarefasRepositorio;
+	
+	@Autowired
+	private TarefaRepositorio tarefaRepositorio;
 
 
 	public List<ListaDeTarefas> buscarTodasAsListas() {
@@ -69,6 +73,7 @@ public class OperacoesComBanco {
 		} else {
 
 			boolean deletou = lista.deletarTarefa(idTarefa);
+			tarefaRepositorio.delete(idTarefa);
 
 			if (deletou) {
 				salvarListaDeTarefa(lista);

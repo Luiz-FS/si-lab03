@@ -37,28 +37,29 @@
             
             	<h2>{{listaDeTarefasSelecionada.nome}}</h2>
 
-                <div id="form">
+                <div>
 
-					<form name="formTarefa">
+					<form novalidate="novalidate" name="formTarefa">
 					
                     	<input class="form-control" type="text" name="txtDescricao" ng-model="tarefa.descricao" placeholder="Tarefa..." ng-required="true"/>
-                    
-                    	<select class="form-control filtro" ng-model="tarefa.prioridade" ng-options="prioridade for prioridade in prioridades" ng-required="true">	
+
+						<select class="form-control prioridade" ng-model="tarefa.prioridade" ng-options="prioridade for prioridade in prioridades" ng-required="true">	
 
                         	<option value="">Prioridade...</option>
 
                     	</select>
-
-                    	<button class="btn btn-primary btn-block" ng-click="adicionaTarefa(tarefa)" ng-disabled="formTarefa.$invalid">Adicionar Tarefa</button>
+                    	
+                    	<div class="botoes">
+                    		<button class="btn btn-primary btn-block adicionar" ng-click="adicionaTarefa(tarefa)" ng-disabled="formTarefa.$invalid">Adicionar Tarefa</button>
+                    		<button class="btn btn-danger btn-block limparTarefas" ng-click="limparTarefas()">Limpar Tarefas</button>
+                    	</div>
                     </form>
-                    
-                    <button class="btn btn-danger btn-block" ng-click="limparTarefas()" ng-disabled="tarefas.length == 0">Limpar Tarefas</button>
 
                 </div>
 
                 <div id="controladorDeTarefas">
                 
-                	<select class="form-control" ng-model="selLista" ng-click="selecionarListaDetarefa(selLista)" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
+                	<select class="form-control listas" ng-model="selLista" ng-click="selecionarListaDetarefa(selLista)" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
 
                     	<option value="">Prioridade...</option>
 

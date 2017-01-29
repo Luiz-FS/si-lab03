@@ -7,9 +7,9 @@ var app = angular.module("agendaDeTarefas", []);
 app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 	$scope.app = "Agenda de Tarefas";
-	
+
 	$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
-	
+
 	$scope.prioridades = [];
 
 	$scope.tableFilter = [
@@ -27,7 +27,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.adicionaTarefa = function (tarefa) {
 
 		tarefa.concluida = false;
-		
+
 		$scope.salvarTarefa(tarefa);
 
 		delete $scope.tarefa;
@@ -37,12 +37,14 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 		var index = getIndexTarefa(tarefa);
 
-		$scope.tarefas.splice(index, 1);
+		$scope.listaDeTarefasSelecionada.tarefas.splice(index, 1);
+		
+		$scope.deletarTarefa(tarefa);
 	}
 
 	$scope.limparTarefas = function () {
 
-		$scope.listaDeTarfasSelecionada.tarefas = [];
+		$scope.listaDeTarefasSelecionada.tarefas = [];
 	}
 
 	$scope.calculaPorcentagem = function (tarefas) {
@@ -84,12 +86,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 	var getIndexTarefa = function (tarefa) {
 
-		for (var i = 0; i < $scope.tarefas.length; i++) {
-
-			if ($scope.tarefas[i] == tarefa) {
-				return i;
-			}
-		}
+		return $scope.listaDeTarefasSelecionada.tarefas.indexOf(tarefa);
 	}
 
 
@@ -116,55 +113,30 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		visualizador.style.display = "block";
 	}
 
-	$scope.carregarListas = function() {
-		$http({method:'GET', url:'http://localhost:8080/listas'})
-		.then(function(response){
-			
-			nomesListas(response.data);
-			
+	$http({method:'GET', url:'http://localhost:8080/listas'})
+	.then(function(response){
 
-		}, function(response){
-			console.log(response.data);
-			console.log(response.status);
-		})
-	}
-	
-	//Organizar este metodo
-	$scope.carregarListas();
-	
-	function nomesListas(lista) {
-		
-		arr = [];
-		
-		for (var i =0; i < lista.length; i++) {
-			
-			arr.push(lista[i]);
-		}
-		
-		$scope.listasDeTarefas = arr;
-	}
-	
-	//Até aqui está feio
-	
-	//ajeitar isso
-	$scope.carregarPrioridades = function() {
-		$http({method:'GET', url:'http://localhost:8080/listas/prioridades'})
-		.then(function(response){
-			
-			$scope.prioridades = response.data; 
+		$scope.listasDeTarefas = response.data;
 
-		}, function(response){
-			console.log(response.data);
-			console.log(response.status);
-		})
-	}
-	
-	$scope.carregarPrioridades();
-	
+	}, function(response){
+		console.log(response.data);
+		console.log(response.status);
+	});
+
+	$http({method:'GET', url:'http://localhost:8080/listas/prioridades'})
+	.then(function(response){
+
+		$scope.prioridades = response.data; 
+
+	}, function(response){
+		console.log(response.data);
+		console.log(response.status);
+	});
+
 	$scope.salvarTarefa = function(tarefa) {
 		$http({method:'POST', url:'http://localhost:8080/listas/' + $scope.listaDeTarefasSelecionada.id, data:tarefa})
 		.then(function(response){
-			 
+
 			$scope.listaDeTarefasSelecionada.tarefas.push(response.data);
 
 		}, function(response){
@@ -173,6 +145,18 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		})
 	}
 	
+	$scope.deletarTarefa = function(tarefa) {
+		$http({method:'DELETE', url:'http://localhost:8080/listas/' + $scope.listaDeTarefasSelecionada.id + "/" + tarefa.id})
+		.then(function(response){
+
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+
 	$scope.selecionarListaDetarefa = function (listaDeTarefa) {
 		$scope.listaDeTarefasSelecionada = listaDeTarefa;
 		console.log(listaDeTarefa);
