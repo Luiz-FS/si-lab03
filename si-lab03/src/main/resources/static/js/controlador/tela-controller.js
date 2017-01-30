@@ -1,9 +1,3 @@
-/**
- * Created by luiz on 26/11/16.
- */
-
-var app = angular.module("agendaDeTarefas", []);
-
 app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 	$scope.app = "Agenda de Tarefas";
@@ -82,6 +76,8 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		} else {
 			tarefa.concluida = true;
 		}
+		
+		$scope.alterarTarefa(tarefa);
 	}
 
 	var getIndexTarefa = function (tarefa) {
@@ -147,6 +143,18 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	
 	$scope.deletarTarefa = function(tarefa) {
 		$http({method:'DELETE', url:'http://localhost:8080/listas/' + $scope.listaDeTarefasSelecionada.id + "/" + tarefa.id})
+		.then(function(response){
+
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.alterarTarefa = function(tarefa) {
+		$http({method:'PUT', url:'http://localhost:8080/listas', data:tarefa})
 		.then(function(response){
 
 			console.log(response.status);

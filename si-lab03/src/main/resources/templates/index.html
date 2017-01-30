@@ -6,10 +6,11 @@
         <title>Agenda de tarefas</title>
         <link rel="icon" type="image/ico" href="./css/icone.ico"/>
 
-        <script src="./js/angular.js"></script>
-        <script src="./js/jquery.js"></script>
-        <script src="./js/bootstrap.js"></script>
-        <script src="./js/funcoes.js"></script>
+        <script src="./js/frameworks/angular.js"></script>
+        <script src="./js/frameworks/jquery.js"></script>
+        <script src="./js/frameworks/bootstrap.js"></script>
+        <script src="./js/app.js"></script>
+        <script src="./js/controlador/tela-controller.js"></script>
 
 
         <link rel="stylesheet" href="./css/bootstrap.css"/>
@@ -61,7 +62,7 @@
                 
                 	<select class="form-control listas" ng-model="selLista" ng-click="selecionarListaDetarefa(selLista)" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
 
-                    	<option value="">Prioridade...</option>
+                    	<option value="">Listas de tarefas...</option>
 
                   	</select>
 
@@ -99,7 +100,7 @@
                     </div>
 
                 </div>
-
+               
                 <div class="text-xs-center" id="example-caption-6">Progresso das tarefas&hellip; {{calculaPorcentagem(listaDeTarefasSelecionada.tarefas) + "%"}}</div>
                 <div id="progressBar">
 

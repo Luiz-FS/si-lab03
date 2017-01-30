@@ -88,4 +88,8 @@ public class OperacoesComBanco {
 	public void deletarTodas() {
 		listaDeTarefasRepositorio.deleteAll();
 	}
+	
+	public Tarefa alterarTarefa(Tarefa tarefa) {
+		return tarefaRepositorio.save(tarefa);
+	}
 } 

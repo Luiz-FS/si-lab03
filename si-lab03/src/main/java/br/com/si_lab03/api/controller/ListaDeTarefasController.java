@@ -82,4 +82,12 @@ public class ListaDeTarefasController {
 
 		return new ResponseEntity<>(listas, HttpStatus.OK);
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/listas", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Tarefa> alterarTarefa(@RequestBody Tarefa tarefa) {
+
+		Tarefa tarefaAlterada = operacoesComBanco.alterarTarefa(tarefa);
+
+		return new ResponseEntity<>(tarefaAlterada, HttpStatus.OK);
+	}
 }
