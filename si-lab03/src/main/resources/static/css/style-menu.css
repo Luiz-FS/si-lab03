@@ -1,0 +1,115 @@
+#menuFixado {
+	position: fixed;
+	width: 950px;
+	z-index: 1;
+	box-shadow: 0 3px 3px #6b6b6b;
+}
+
+.titulo {
+
+    background-color: #003dfd;
+    text-align: center;
+    font-size: 43px;
+
+    padding-top: 1px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+}
+
+
+#menu {
+
+    background-color: #00d7ff;
+    margin: 0px;
+    list-style-type: none;
+}
+
+#menu li {
+    display: inline;
+    margin-right: 10px;
+}
+
+#menu li a {
+
+    text-decoration: none;
+    color: black;
+}
+
+#menuEdicao {
+	position: relative;
+	display: inline-block;
+}
+
+#editacaoListaBtn {
+	
+	background-color: #4CAF50;
+    color: white;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 16px;
+	border: none;
+	outline: none;
+}
+
+#caixaEdicao {
+	
+	display: none;
+	position: fixed;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	max-width: 253px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#menuEdicao:hover #caixaEdicao {
+	display: block;
+}
+
+#menuEdicao:hover #editacaoListaBtn {
+	background-color: #3e8e41;
+}
+
+button.acordeon {
+	
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 15px;
+	width: 100%;
+	text-align: left;
+	border: none;
+	outline: none;
+	transition: 0.4s;
+}
+
+button.acordeon.ativo, button.acordeon:hover {
+	background-color: #ddd;
+}
+
+div.painel {
+	padding: 0 18px;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+}
+
+div.painel button {
+	float: right;
+}
+
+button.alteraLista:after {
+	content: '\02795'; /*Caractere (+) no código unicode*/
+	font-size: 13px;
+	color: #777;
+	float: right;
+	margin-left: 5px;
+}
+
+button.alteraLista.ativo:after {
+	content: "\2796"; /*Caractere (-) no código unicode*/
+}
+

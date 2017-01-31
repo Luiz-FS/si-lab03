@@ -1,5 +1,6 @@
 package br.com.si_lab03.api.controller.operacoes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class OperacoesComBanco {
 
 	@Autowired
 	private ListaDeTarefasRepositorio listaDeTarefasRepositorio;
-	
+
 	@Autowired
 	private TarefaRepositorio tarefaRepositorio;
 
@@ -78,7 +79,7 @@ public class OperacoesComBanco {
 			if (deletou) {
 				salvarListaDeTarefa(lista);
 				return true;
-				
+
 			} else {
 				return false;
 			}
@@ -88,8 +89,38 @@ public class OperacoesComBanco {
 	public void deletarTodas() {
 		listaDeTarefasRepositorio.deleteAll();
 	}
-	
+
 	public Tarefa alterarTarefa(Tarefa tarefa) {
 		return tarefaRepositorio.save(tarefa);
+	}
+
+	public boolean deletarTodasAsTarefas(Integer idLista) {
+
+		ListaDeTarefas listaEncontrada = listaDeTarefasRepositorio.findOne(idLista);
+
+		if (listaEncontrada != null) {
+			
+			List<Tarefa> tarefas = listaEncontrada.getTarefas();
+			listaEncontrada.setTarefas(new ArrayList<>());
+			
+			listaDeTarefasRepositorio.save(listaEncontrada);
+			
+			deletarTarefas(tarefas);
+			
+			return true;
+
+		} else {
+
+			return false;
+		}
+	}
+	
+	private void deletarTarefas(List<Tarefa> tarefas) {
+		
+		for (Tarefa tarefa: tarefas) {
+			
+			tarefaRepositorio.delete(tarefa);
+			
+		}
 	}
 } 

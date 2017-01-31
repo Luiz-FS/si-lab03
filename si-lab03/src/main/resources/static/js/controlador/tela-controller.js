@@ -17,6 +17,8 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.tarefaAtual = {};
 
 	$scope.MAXIMO_PERCENTUAL = 100;
+	
+	$scope.modoEdicao = false;
 
 	$scope.adicionaTarefa = function (tarefa) {
 
@@ -39,6 +41,23 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.limparTarefas = function () {
 
 		$scope.listaDeTarefasSelecionada.tarefas = [];
+		
+		$scope.deletarTodasTarefas($scope.listaDeTarefasSelecionada);
+	}
+	
+	$scope.editarTarefa = function() {
+		$scope.modoEdicao = true;
+	}
+	
+	$scope.cancelarEdicao = function() {
+		$scope.modoEdicao = false;
+	}
+	
+	$scope.salvarEdicao = function(tarefa) {
+		
+		$scope.modoEdicao = false;
+		$scope.alterarTarefa(tarefa);
+		fecharJanela();
 	}
 
 	$scope.calculaPorcentagem = function (tarefas) {
@@ -90,17 +109,20 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 	var fechar = document.getElementsByClassName("fechar")[0];
 
-	fechar.onclick = function () {
-
-		visualizador.style.display = "none";
-	}
+	fechar.onclick = function() {
+		fecharJanela();
+	};
 
 	window.onclick = function (event) {
 
 		if (event.target == visualizador) {
 
-			visualizador.style.display = "none";
+			fecharJanela();
 		}
+	}
+	
+	function fecharJanela () {
+		visualizador.style.display = "none";
 	}
 
 	$scope.abrirTarefa = function (tarefa) {
@@ -155,6 +177,18 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	
 	$scope.alterarTarefa = function(tarefa) {
 		$http({method:'PUT', url:'http://localhost:8080/listas', data:tarefa})
+		.then(function(response){
+			
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.deletarTodasTarefas = function(listaDeTarefas) {
+		$http({method:'DELETE', url:'http://localhost:8080/listas/tarefas/' + listaDeTarefas.id})
 		.then(function(response){
 
 			console.log(response.status);

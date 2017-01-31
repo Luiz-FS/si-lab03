@@ -3,38 +3,15 @@
     background-color: rgba(223, 224, 225, 0.89);
     text-align: center;
     border-radius: 0rem;
+    padding-top: 135px;
 }
 
-.titulo {
-
-    background-color: #003dfd;
-    text-align: center;
-    font-size: 43px;
-
-    padding-top: 1px;
-    padding-bottom: 10px;
-    font-weight: bold;
-    color: #ffffff;
-    margin: 0;
-}
-
-
-#menu {
-
-    background-color: #00d7ff;
-    margin: 0px;
-    list-style-type: none;
-}
-
-#menu li {
-    display: inline;
-    margin-right: 10px;
-}
-
-#menu li a {
-
-    text-decoration: none;
-    color: black;
+#nomeLista {
+	
+	color: #4ac637;
+	margin-bottom: 40px;
+	font-weight: bold;
+	font-size: 50px;
 }
 
 
@@ -422,7 +399,7 @@
     text-align: right;
 }
 
-#editar {
+.editar {
 
     background-color: white;
     border: 1px solid blue;
@@ -435,7 +412,7 @@
     to {background-color: #5370ff; color: white}
 }
 
-#editar:hover {
+.editar:hover {
 
     animation-name: animacaoEditar;
     animation-duration: 0.3s;
@@ -444,7 +421,7 @@
     font-weight: bold;
 }
 
-#salvar {
+.salvar {
 
     background-color: white;
     border: 1px solid green;
@@ -457,7 +434,7 @@
     to {background-color: #00bc01; color: white}
 }
 
-#salvar:hover {
+.salvar:hover {
 
     animation-name: animacaoSalvar;
     animation-duration: 0.3s;
@@ -466,7 +443,7 @@
     font-weight: bold;
 }
 
-#cancelar {
+.cancelar {
 
     background-color: white;
     border: 1px solid red;
@@ -480,7 +457,7 @@
     to {background-color: #ff253b; color: white}
 }
 
-#cancelar:hover {
+.cancelar:hover {
 
     animation-name: animacaoCancelar;
     animation-duration: 0.3s;

@@ -11,10 +11,12 @@
         <script src="./js/frameworks/bootstrap.js"></script>
         <script src="./js/app.js"></script>
         <script src="./js/controlador/tela-controller.js"></script>
+        <script src="./js/controlador/menu-controller.js"></script>
 
 
         <link rel="stylesheet" href="./css/bootstrap.css"/>
         <link rel="stylesheet" href="./css/style.css"/>
+        <link rel="stylesheet" href="./css/style-menu.css"/>
         <link rel="stylesheet" href="./css/glyphicon.css"/>
 
     </head>
@@ -23,12 +25,36 @@
 
         <div id="interface">
 
-            <nav>
+            <nav id="menuFixado">
 
                 <h1 class="titulo">{{app}}</h1>
 
                 <ul id="menu">
                     <li><a href="/">Home</a></li>
+                    <li>
+                    	<div id="menuEdicao">
+                    		<button id="editacaoListaBtn">Editar</button>
+                    		<div id="caixaEdicao">
+                    			
+                    			<button class="acordeon alteraLista">Adicionar Lista de Tarefas</button>
+                    			<div class="painel">
+                    				<input type="text" class="form-control"/>
+                    				<button class="cancelar">Cancelar</button>
+                    				<button class="salvar">Salvar</button>
+                    			</div>
+                    			
+                    			<button class="acordeon alteraLista">Editar nome da lista</button>
+                    			<div class="painel">
+                    				<input type="text" class="form-control"/>
+                    				<button class="cancelar">Cancelar</button>
+                    				<button class="salvar">Salvar</button>
+                    			</div>
+                    			<button class="acordeon">Remover lista atual</button><br/>
+                    			<button class="acordeon">Remover Todas as listas</button>
+                    			
+                    		</div>
+                    	</div>
+                    </li>
                     <li><a href="https://github.com/Luiz-FS" target="_blank">Sobre</a></li>
                 </ul>
 
@@ -36,7 +62,7 @@
 
             <div class="jumbotron">
             
-            	<h2>{{listaDeTarefasSelecionada.nome}}</h2>
+            	<h2 id="nomeLista">{{listaDeTarefasSelecionada.nome}}</h2>
 
                 <div>
 
@@ -130,15 +156,34 @@
 
                 <div class="corpo-texto">
 
-                    <p><span class="atributo">Tarefa: </span>{{tarefaAtual.descricao}}</p>
-                    <p><span class="atributo">Prioridade: </span>{{tarefaAtual.prioridade}}</p>
-                    <p><span class="atributo">Data: </span>25/08/1997</p>
+                    <p>
+                    	<span class="atributo">Tarefa: </span>
+                    	<span ng-show="!modoEdicao">{{tarefaAtual.descricao}}</span>
+                    	<input type="text" ng-model="tarefaAtual.descricao" ng-show="modoEdicao"/>
+                    </p>
+                    
+                    <p>
+                    	<span class="atributo">Prioridade: </span>
+                    	<span  ng-show="!modoEdicao">{{tarefaAtual.prioridade}}</span>
+                    	
+                    	<select class="form-control" ng-model="tarefaAtual.prioridade" ng-options="prioridade for prioridade in prioridades" ng-show="modoEdicao"
+                    	style="width: 130px; display: inline-block;">	
+
+                        	<option value="">Prioridade...</option>
+
+                    	</select>
+                    </p>
+                    
+                    <p>
+                    	<span class="atributo">Concluida: </span>
+                    	<input type="checkbox" ng-model="tarefaAtual.concluida" ng-disabled="!modoEdicao"/>
+                    </p>
 
                     <div id="botoes">
 
-                        <button id="editar">Editar</button>
-                        <button id="salvar">Salvar</button>
-                        <button id="cancelar">Cancelar</button>
+                        <button class="editar" ng-click="editarTarefa()">Editar</button>
+                        <button class="salvar" ng-click="salvarEdicao(tarefaAtual)">Salvar</button>
+                        <button class="cancelar" ng-click="cancelarEdicao()">Cancelar</button>
 
                     </div>
 
@@ -147,6 +192,8 @@
             </div>
 
         </div>
-
+        
+		<script src="./js/controlador/menu-controller.js"></script>
+		
     </body>
 </html>

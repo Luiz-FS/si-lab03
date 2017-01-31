@@ -90,4 +90,15 @@ public class ListaDeTarefasController {
 
 		return new ResponseEntity<>(tarefaAlterada, HttpStatus.OK);
 	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas/tarefas/{idLista}")
+	public ResponseEntity<ListaDeTarefas> deletarTodasAsTarefas(@PathVariable Integer idLista) {
+
+		boolean deletou = operacoesComBanco.deletarTodasAsTarefas(idLista);
+
+		if (deletou)
+			return new ResponseEntity<>(HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 }

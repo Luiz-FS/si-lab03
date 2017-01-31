@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -18,7 +19,7 @@ public class ListaDeTarefas {
 	private Integer id;
 	private String nome;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Tarefa> tarefas;
 
 	public ListaDeTarefas() {
