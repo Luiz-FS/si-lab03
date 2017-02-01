@@ -66,9 +66,10 @@
 
                 <div>
 
-					<form novalidate="novalidate" name="formTarefa">
+					<form novalidate="novalidate" name="formTarefa" class="adicaoTarefa">
 					
                     	<input class="form-control" type="text" name="txtDescricao" ng-model="tarefa.descricao" placeholder="Tarefa..." ng-required="true"/>
+                    	<input class="form-control comentario" type="text" ng-model="tarefa.comentario" placeholder="Descrição da tarefa..."/>
 
 						<select class="form-control prioridade" ng-model="tarefa.prioridade" ng-options="prioridade for prioridade in prioridades" ng-required="true">	
 

@@ -14,6 +14,16 @@
 	font-size: 50px;
 }
 
+.adicaoTarefa input {
+	width: 200px;
+	display: inline-block;
+}
+
+.comentario {
+	/*display: inline-block;
+	margin-top: -10000px;*/
+}
+
 
 .limparTarefas {
 

@@ -24,6 +24,7 @@ public class Tarefa {
 	private boolean concluida;
 	private Prioridade prioridade;
 	private String categoria;
+	private String comentario;
 	
 	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<SubTarefa> subTarefas;
@@ -91,6 +92,14 @@ public class Tarefa {
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+	
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 	
 	@Override
