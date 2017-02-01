@@ -38,19 +38,19 @@
                     			
                     			<button class="acordeon alteraLista">Adicionar Lista de Tarefas</button>
                     			<div class="painel">
-                    				<input type="text" class="form-control"/>
-                    				<button class="cancelar">Cancelar</button>
-                    				<button class="salvar">Salvar</button>
+                    				<input type="text" class="form-control txtNome" ng-model="listaDeTarefas.nome" placeholder="Nome da lista..."/>
+                    				<button class="cancelar" ng-click="listaDeTarefas.nome = null">Cancelar</button>
+                    				<button class="salvar" ng-click="adicionarNovaLista(listaDeTarefas)" style="margin-right: 5px;">Adicionar</button>
                     			</div>
                     			
                     			<button class="acordeon alteraLista">Editar nome da lista</button>
                     			<div class="painel">
-                    				<input type="text" class="form-control"/>
-                    				<button class="cancelar">Cancelar</button>
-                    				<button class="salvar">Salvar</button>
+                    				<input type="text" class="form-control txtNome" ng-model="novoNome" placeholder="Novo nome da lista..."/>
+                    				<button class="cancelar" ng-click="novoNome = null">Cancelar</button>
+                    				<button class="salvar" ng-click="alterarNomeDaLista(novoNome)" style="margin-right: 5px;">Salvar</button>
                     			</div>
-                    			<button class="acordeon">Remover lista atual</button><br/>
-                    			<button class="acordeon">Remover Todas as listas</button>
+                    			<button class="acordeon" ng-click="deletarListaTarefas(listaDeTarefasSelecionada)">Remover lista atual</button><br/>
+                    			<button class="acordeon" ng-click="deletarTodasAsListas()">Remover Todas as listas</button>
                     			
                     		</div>
                     	</div>
@@ -86,9 +86,9 @@
 
                 <div id="controladorDeTarefas">
                 
-                	<select class="form-control listas" ng-model="selLista" ng-click="selecionarListaDetarefa(selLista)" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
+                	<select class="form-control listas" ng-model="listaDeTarefasSelecionada" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
 
-                    	<option value="">Listas de tarefas...</option>
+                    	<option value="" disabled="disabled">Listas de tarefas...</option>
 
                   	</select>
 

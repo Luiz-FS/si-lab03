@@ -34,6 +34,14 @@ public class ListaDeTarefasController {
 		return new ResponseEntity<>(listas, HttpStatus.OK);
 	}
 
+	@RequestMapping(method=RequestMethod.GET, value="/listas/prioridades", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Prioridade[]> buscarListasPrioridades() {
+	
+		Prioridade[] listas = Prioridade.values();
+	
+		return new ResponseEntity<>(listas, HttpStatus.OK);
+	}
+
 	@RequestMapping(method=RequestMethod.POST, value="/listas", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ListaDeTarefas> salvarLista(@RequestBody ListaDeTarefas listaDeTarefas) {
 		
@@ -53,42 +61,23 @@ public class ListaDeTarefasController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{idLista}/{idTarefa}")
-	public ResponseEntity<Tarefa> deletarTarefa(@PathVariable Integer idLista, @PathVariable Integer idTarefa) {
-
-		boolean deletou = operacoesComBanco.deletarTarefa(idLista, idTarefa);
-
-		if (deletou)
-			return new ResponseEntity<>(HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
-
-	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{id}")
-	public ResponseEntity<ListaDeTarefas> deletarLista(@PathVariable Integer id) {
-
-		boolean deletou = operacoesComBanco.deletarListaDeTarefa(id);
-
-		if (deletou)
-			return new ResponseEntity<>(HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/listas/prioridades", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Prioridade[]> buscarListasPrioridades() {
-
-		Prioridade[] listas = Prioridade.values();
-
-		return new ResponseEntity<>(listas, HttpStatus.OK);
-	}
-	
-	@RequestMapping(method=RequestMethod.PUT, value="/listas", consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method=RequestMethod.PUT, value="/listas/tarefa", consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Tarefa> alterarTarefa(@RequestBody Tarefa tarefa) {
 
 		Tarefa tarefaAlterada = operacoesComBanco.alterarTarefa(tarefa);
 
 		return new ResponseEntity<>(tarefaAlterada, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/listas/{idLista}/{novoNome}")
+	public ResponseEntity<ListaDeTarefas> alterarNomeLista(@PathVariable Integer idLista, @PathVariable String novoNome) {
+
+		ListaDeTarefas listaAlterada = operacoesComBanco.alterarNomeDaLista(idLista, novoNome);
+
+		if (listaAlterada != null)
+			return new ResponseEntity<>(listaAlterada, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/listas/tarefas/{idLista}")
@@ -100,5 +89,35 @@ public class ListaDeTarefasController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{idLista}/{idTarefa}")
+	public ResponseEntity<Tarefa> deletarTarefa(@PathVariable Integer idLista, @PathVariable Integer idTarefa) {
+	
+		boolean deletou = operacoesComBanco.deletarTarefa(idLista, idTarefa);
+	
+		if (deletou)
+			return new ResponseEntity<>(HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas/{id}")
+	public ResponseEntity<ListaDeTarefas> deletarLista(@PathVariable Integer id) {
+	
+		boolean deletou = operacoesComBanco.deletarListaDeTarefa(id);
+	
+		if (deletou)
+			return new ResponseEntity<>(HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(method=RequestMethod.DELETE, value="/listas")
+	public ResponseEntity<ListaDeTarefas> deletarTodasAsListas() {
+
+		operacoesComBanco.deletarTodasAsListas();
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -65,6 +65,21 @@ public class OperacoesComBanco {
 		}
 	}
 
+	public ListaDeTarefas alterarNomeDaLista(Integer idLista, String novoNome) {
+
+		ListaDeTarefas listaEncotrada = listaDeTarefasRepositorio.findOne(idLista);
+
+		if (listaEncotrada != null) {
+			listaEncotrada.setNome(novoNome);
+			ListaDeTarefas listaSalva = listaDeTarefasRepositorio.save(listaEncotrada);
+
+			return listaSalva;
+
+		} else {
+			return null;
+		}
+	}
+
 	public boolean deletarTarefa(Integer idLista, Integer idTarefa) {
 
 		ListaDeTarefas lista = listaDeTarefasRepositorio.findOne(idLista);
@@ -74,7 +89,6 @@ public class OperacoesComBanco {
 		} else {
 
 			boolean deletou = lista.deletarTarefa(idTarefa);
-			tarefaRepositorio.delete(idTarefa);
 
 			if (deletou) {
 				salvarListaDeTarefa(lista);
@@ -86,7 +100,7 @@ public class OperacoesComBanco {
 		}
 	}
 
-	public void deletarTodas() {
+	public void deletarTodasAsListas() {
 		listaDeTarefasRepositorio.deleteAll();
 	}
 
@@ -99,28 +113,16 @@ public class OperacoesComBanco {
 		ListaDeTarefas listaEncontrada = listaDeTarefasRepositorio.findOne(idLista);
 
 		if (listaEncontrada != null) {
-			
-			List<Tarefa> tarefas = listaEncontrada.getTarefas();
+
 			listaEncontrada.setTarefas(new ArrayList<>());
-			
+
 			listaDeTarefasRepositorio.save(listaEncontrada);
-			
-			deletarTarefas(tarefas);
-			
+
 			return true;
 
 		} else {
 
 			return false;
-		}
-	}
-	
-	private void deletarTarefas(List<Tarefa> tarefas) {
-		
-		for (Tarefa tarefa: tarefas) {
-			
-			tarefaRepositorio.delete(tarefa);
-			
 		}
 	}
 } 

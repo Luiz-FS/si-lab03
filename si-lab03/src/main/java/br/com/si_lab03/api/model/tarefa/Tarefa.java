@@ -1,8 +1,15 @@
 package br.com.si_lab03.api.model.tarefa;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import br.com.si_lab03.api.model.tarefa.subtarefa.SubTarefa;
 
 @Entity
 public class Tarefa {
@@ -16,9 +23,14 @@ public class Tarefa {
 	private String descricao;
 	private boolean concluida;
 	private Prioridade prioridade;
+	private String categoria;
+	
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<SubTarefa> subTarefas;
 	
 	public Tarefa() {
 		this.concluida = false;
+		this.subTarefas = new ArrayList<>();
 	}
 	
 	public Tarefa(String descricao) {
@@ -58,6 +70,30 @@ public class Tarefa {
 	}
 	
 	@Override
+	public String toString() {
+		
+		String saida = this.descricao + "-" + this.id;
+		
+		return saida;
+	}
+
+	public List<SubTarefa> getSubTarefas() {
+		return subTarefas;
+	}
+
+	public void setSubTarefas(List<SubTarefa> subTarefas) {
+		this.subTarefas = subTarefas;
+	}
+	
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -80,13 +116,5 @@ public class Tarefa {
 		} else if (!descricao.equals(other.descricao))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		
-		String saida = this.descricao + "-" + this.id;
-		
-		return saida;
 	}
 }

@@ -176,7 +176,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	}
 	
 	$scope.alterarTarefa = function(tarefa) {
-		$http({method:'PUT', url:'http://localhost:8080/listas', data:tarefa})
+		$http({method:'PUT', url:'http://localhost:8080/listas/tarefa', data:tarefa})
 		.then(function(response){
 			
 			console.log(response.status);
@@ -198,9 +198,69 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			console.log(response.status);
 		})
 	}
+	
+	$scope.adicionarNovaLista = function(listaDeTarefas) {
+		$http({method:'POST', url:'http://localhost:8080/listas', data: listaDeTarefas})
+		.then(function(response){
 
-	$scope.selecionarListaDetarefa = function (listaDeTarefa) {
-		$scope.listaDeTarefasSelecionada = listaDeTarefa;
-		console.log(listaDeTarefa);
+			$scope.listaDeTarefasSelecionada = response.data;
+			$scope.listasDeTarefas.push(response.data);
+			delete $scope.listaDeTarefas;
+			
+			console.log(response.status);
+			console.log(response.data);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.deletarListaTarefas = function(listaDeTarefas) {
+		$http({method:'DELETE', url:'http://localhost:8080/listas/' + listaDeTarefas.id})
+		.then(function(response){
+
+			var index = $scope.listasDeTarefas.indexOf(listaDeTarefas);
+			
+			$scope.listasDeTarefas.splice(index, 1);
+			$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
+			
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.deletarTodasAsListas = function() {
+		$http({method:'DELETE', url:'http://localhost:8080/listas'})
+		.then(function(response){
+			
+			$scope.listasDeTarefas = [];
+			$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
+			
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.alterarNomeDaLista = function(novoNome) {
+		$http({method:'PUT', url:'http://localhost:8080/listas/' + $scope.listaDeTarefasSelecionada.id + '/' + novoNome })
+		.then(function(response){
+			
+			$scope.listaDeTarefasSelecionada.nome = response.data.nome;
+			
+			console.log(response.status);
+			
+			delete $scope.novoNome;
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
 	}
 });
