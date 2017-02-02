@@ -45,6 +45,29 @@ public class Tarefa {
 		return this.subTarefas.get(index);
 	}
 	
+	public SubTarefa buscarSubTarefaPorId(Integer idSubTarefa) {
+		
+		for (SubTarefa subTarefa : this.subTarefas) {
+			
+			if (subTarefa.getId().equals(idSubTarefa))
+				return subTarefa;
+		}
+		
+		return null;
+	}
+	
+	public boolean deletarSubTarefa(Integer idSubTarefa) {
+		
+		SubTarefa subTarefaEncontrada = buscarSubTarefaPorId(idSubTarefa);
+		
+		if (subTarefaEncontrada != null) {
+			this.subTarefas.remove(subTarefaEncontrada);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public Tarefa(String descricao) {
 		this.descricao = descricao;
 	}

@@ -10,6 +10,7 @@ import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 import br.com.si_lab03.api.model.tarefa.Tarefa;
 import br.com.si_lab03.api.model.tarefa.subtarefa.SubTarefa;
 import br.com.si_lab03.api.repository.ListaDeTarefasRepositorio;
+import br.com.si_lab03.api.repository.SubTarefaRepositorio;
 import br.com.si_lab03.api.repository.TarefaRepositorio;
 
 @Component
@@ -20,7 +21,24 @@ public class OperacoesComBanco {
 
 	@Autowired
 	private TarefaRepositorio tarefaRepositorio;
+	
+	@Autowired
+	private SubTarefaRepositorio subTarefaRepository;
+	
+	private static OperacoesComBanco operacoesComBanco;
 
+	private OperacoesComBanco() {
+		
+	}
+	
+	public static OperacoesComBanco getOperacoesComBanco() {
+		
+		if (operacoesComBanco == null) {
+			operacoesComBanco = new OperacoesComBanco();
+		}
+		
+		return operacoesComBanco;
+	}
 
 	public List<ListaDeTarefas> buscarTodasAsListas() {
 		return listaDeTarefasRepositorio.findAll();
@@ -86,21 +104,6 @@ public class OperacoesComBanco {
 		}
 	}
 
-	public ListaDeTarefas alterarNomeDaLista(Integer idLista, String novoNome) {
-
-		ListaDeTarefas listaEncotrada = listaDeTarefasRepositorio.findOne(idLista);
-
-		if (listaEncotrada != null) {
-			listaEncotrada.setNome(novoNome);
-			ListaDeTarefas listaSalva = listaDeTarefasRepositorio.save(listaEncotrada);
-
-			return listaSalva;
-
-		} else {
-			return null;
-		}
-	}
-
 	public boolean deletarTarefa(Integer idLista, Integer idTarefa) {
 
 		ListaDeTarefas lista = listaDeTarefasRepositorio.findOne(idLista);
@@ -120,30 +123,69 @@ public class OperacoesComBanco {
 			}
 		}
 	}
+	
+	public boolean deletarSubTarefa(Integer idTarefa, Integer idSubTarefa) {
+		
+		Tarefa tarefaEncontrada = tarefaRepositorio.findOne(idTarefa);
+
+		if (tarefaEncontrada == null) {
+			return false;
+		} else {
+
+			boolean deletou = tarefaEncontrada.deletarSubTarefa(idSubTarefa);
+
+			if (deletou) {
+				alterarTarefa(tarefaEncontrada);
+				return true;
+
+			} else {
+				return false;
+			}
+		}
+	}
 
 	public void deletarTodasAsListas() {
 		listaDeTarefasRepositorio.deleteAll();
 	}
 
+	public boolean deletarTodasAsTarefas(Integer idLista) {
+	
+		ListaDeTarefas listaEncontrada = listaDeTarefasRepositorio.findOne(idLista);
+	
+		if (listaEncontrada != null) {
+	
+			listaEncontrada.setTarefas(new ArrayList<>());
+	
+			listaDeTarefasRepositorio.save(listaEncontrada);
+	
+			return true;
+	
+		} else {
+	
+			return false;
+		}
+	}
+
+	public ListaDeTarefas alterarNomeDaLista(Integer idLista, String novoNome) {
+	
+		ListaDeTarefas listaEncotrada = listaDeTarefasRepositorio.findOne(idLista);
+	
+		if (listaEncotrada != null) {
+			listaEncotrada.setNome(novoNome);
+			ListaDeTarefas listaSalva = listaDeTarefasRepositorio.save(listaEncotrada);
+	
+			return listaSalva;
+	
+		} else {
+			return null;
+		}
+	}
+
 	public Tarefa alterarTarefa(Tarefa tarefa) {
 		return tarefaRepositorio.save(tarefa);
 	}
-
-	public boolean deletarTodasAsTarefas(Integer idLista) {
-
-		ListaDeTarefas listaEncontrada = listaDeTarefasRepositorio.findOne(idLista);
-
-		if (listaEncontrada != null) {
-
-			listaEncontrada.setTarefas(new ArrayList<>());
-
-			listaDeTarefasRepositorio.save(listaEncontrada);
-
-			return true;
-
-		} else {
-
-			return false;
-		}
+	
+	public SubTarefa alterarSubTarefa(SubTarefa subTarefa) {
+		return subTarefaRepository.save(subTarefa);
 	}
 } 
