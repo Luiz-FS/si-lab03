@@ -16,6 +16,7 @@ import br.com.si_lab03.api.controller.operacoes.OperacoesComBanco;
 import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 import br.com.si_lab03.api.model.tarefa.Tarefa;
 import br.com.si_lab03.api.model.tarefa.Tarefa.Prioridade;
+import br.com.si_lab03.api.model.tarefa.subtarefa.SubTarefa;
 
 @RestController
 public class ListaDeTarefasController {
@@ -57,6 +58,17 @@ public class ListaDeTarefasController {
 
 		if (tarefaSalva != null)
 			return new ResponseEntity<>(tarefaSalva, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/listas/tarefa/{idTarefa}", consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SubTarefa> salvarSubTarefa(@PathVariable Integer idTarefa, @RequestBody SubTarefa subTarefa) {
+
+		SubTarefa subTarefaSalva = operacoesComBanco.salvarSubTarefa(idTarefa, subTarefa);
+
+		if (subTarefaSalva != null)
+			return new ResponseEntity<>(subTarefaSalva, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}

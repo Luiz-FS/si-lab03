@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.si_lab03.api.model.lista.ListaDeTarefas;
 import br.com.si_lab03.api.model.tarefa.Tarefa;
+import br.com.si_lab03.api.model.tarefa.subtarefa.SubTarefa;
 import br.com.si_lab03.api.repository.ListaDeTarefasRepositorio;
 import br.com.si_lab03.api.repository.TarefaRepositorio;
 
@@ -46,6 +47,26 @@ public class OperacoesComBanco {
 			Tarefa tarefaSalva = listaSalva.buscarTarefa(tarefa);
 
 			return tarefaSalva;
+		} else {
+
+			return null;
+
+		}
+	}
+	
+	public SubTarefa salvarSubTarefa(Integer idTarefa, SubTarefa subTarefa) {
+
+		Tarefa tarefaEncontrada = this.tarefaRepositorio.findOne(idTarefa);
+
+		if(tarefaEncontrada != null) {
+
+			tarefaEncontrada.adicionarSubTarefa(subTarefa);;
+
+			Tarefa tarefaSalva = alterarTarefa(tarefaEncontrada);
+
+			SubTarefa subTarefaSalva = tarefaSalva.buscarSubTarefa(subTarefa);
+
+			return subTarefaSalva;
 		} else {
 
 			return null;

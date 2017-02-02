@@ -66,10 +66,10 @@
 
                 <div>
 
-					<form novalidate="novalidate" name="formTarefa" class="adicaoTarefa">
+					<form novalidate="novalidate" name="formTarefa">
 					
-                    	<input class="form-control" type="text" name="txtDescricao" ng-model="tarefa.descricao" placeholder="Tarefa..." ng-required="true"/>
-                    	<input class="form-control comentario" type="text" ng-model="tarefa.comentario" placeholder="Descrição da tarefa..."/>
+                    	<input class="form-control txtTarefa" type="text" name="txtDescricao" ng-model="tarefa.descricao" placeholder="Tarefa..." ng-required="true"/>
+                    	<input class="form-control txtTarefa" type="text" ng-model="tarefa.comentario" placeholder="Descrição da tarefa..."/>
 
 						<select class="form-control prioridade" ng-model="tarefa.prioridade" ng-options="prioridade for prioridade in prioridades" ng-required="true">	
 
@@ -77,10 +77,14 @@
 
                     	</select>
                     	
+                    	
+                    	
                     	<div class="botoes">
                     		<button class="btn btn-primary btn-block adicionar" ng-click="adicionaTarefa(tarefa)" ng-disabled="formTarefa.$invalid">Adicionar Tarefa</button>
-                    		<button class="btn btn-danger btn-block limparTarefas" ng-click="limparTarefas()">Limpar Tarefas</button>
+                    		<button class="btn btn-danger btn-block" ng-click="limparTarefas()">Limpar Tarefas</button>
                     	</div>
+                    	
+                    	<input class="form-control categoria" type="text" ng-model="tarefa.categoria" placeholder="Categoria da tarefa..."/>
                     </form>
 
                 </div>
@@ -163,6 +167,11 @@
                     	<input type="text" ng-model="tarefaAtual.descricao" ng-show="modoEdicao"/>
                     </p>
                     
+                     <p>
+                    	<span class="atributo">Descrição: </span>
+                    	<span  ng-show="!modoEdicao">{{tarefaAtual.comentario}}</span>
+                    </p>
+                    
                     <p>
                     	<span class="atributo">Prioridade: </span>
                     	<span  ng-show="!modoEdicao">{{tarefaAtual.prioridade}}</span>
@@ -176,8 +185,41 @@
                     </p>
                     
                     <p>
+                    	<span class="atributo">Sub-Tarefas: </span>
+                    	<input type="text" class="form-control addSubTarefa" ng-model="subtarefa.descricao" placeholder="Nome da SubTarefa..."/>
+                    	<button class="salvar" ng-click="adicionarSubTarefa(tarefaAtual, subtarefa)">Adicionar</button>
+                    	<button class="cancelar" ng-click="subtarefa.descricao = null">Cancelar</button>
+                    </p>
+                    
+                    <div id="caixa-subtarefas">
+                    		
+                    	<table id="tabelaSubtarefas">
+                    		
+                    		<tr style="text-align: center;">
+                    			<th>Nome</th>
+                    			<th>Concluida</th>
+                    			<th>Deletar</th>
+                    		</tr>
+                    			
+                    		<tr ng-repeat="subtarefa in tarefaAtual.subTarefas">
+                    			
+                    			<td>{{subtarefa.descricao}}</td>
+                    			<td><input type="checkbox" ng-model="subtarefa.concluida"/></td>
+                    			<td><button>Deletar</button></td>
+                    		</tr>
+                    		
+                    	</table>
+                    		
+                    </div>
+                    
+                    <p>
                     	<span class="atributo">Concluida: </span>
                     	<input type="checkbox" ng-model="tarefaAtual.concluida" ng-disabled="!modoEdicao"/>
+                    </p>
+                    
+                    <p>
+                    	<span class="atributo">Categoria: </span>
+                    	<span  ng-show="!modoEdicao">{{tarefaAtual.categoria}}</span>
                     </p>
 
                     <div id="botoes">

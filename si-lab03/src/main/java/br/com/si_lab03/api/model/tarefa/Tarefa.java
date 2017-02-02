@@ -34,6 +34,17 @@ public class Tarefa {
 		this.subTarefas = new ArrayList<>();
 	}
 	
+	public void adicionarSubTarefa(SubTarefa subTarefa) {
+		this.subTarefas.add(subTarefa);
+	}
+	
+	public SubTarefa buscarSubTarefa(SubTarefa subTarefa) {
+		
+		int index = this.subTarefas.indexOf(subTarefa);
+		
+		return this.subTarefas.get(index);
+	}
+	
 	public Tarefa(String descricao) {
 		this.descricao = descricao;
 	}

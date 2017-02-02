@@ -14,27 +14,16 @@
 	font-size: 50px;
 }
 
-.adicaoTarefa input {
-	width: 200px;
+.txtTarefa {
+	width: 440px;
 	display: inline-block;
-}
-
-.comentario {
-	/*display: inline-block;
-	margin-top: -10000px;*/
-}
-
-
-.limparTarefas {
-
-    width: 250px;
-    
 }
 
 .prioridade {
 	
-	width: 30%;
+	width: 150px;
 	margin-top: 7px;
+	margin-right: 15px;
 	float: left;
 }
 
@@ -45,12 +34,18 @@
 	
 }
 
+.categoria {
+	margin-top: 7px;
+	width: 200px;
+}
+
 .botoes {
 	float: right;
 }
 
 .botoes button {
 	display: inline;
+	width: 250px;
 }
 
 .creditos {
@@ -335,11 +330,11 @@
 
     background-color: white;
     position: relative;
-    margin: 15% auto;
+    margin: 3% auto;
     padding: 0;
     border: 1px solid #888;
     border-radius: 4px;
-    width: 30%;
+    width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animacaoCaixaDialogo;
     -webkit-animation-duration: 1s;
@@ -474,4 +469,30 @@
     background-color: #ff253b;
     color: white;
     font-weight: bold;
+}
+
+#caixa-subtarefas {
+	
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 200px;
+	overflow: auto;
+    border: groove;
+    margin-bottom: 5px;
+}
+
+#tabelaSubtarefas {
+	margin: 5px auto 5px auto;
+	text-align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.addSubTarefa {
+	width: 50%;
+	display: inline-block;
 }

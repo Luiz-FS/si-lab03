@@ -2,7 +2,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 	$scope.app = "Agenda de Tarefas";
 
-	$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
+	$scope.listaDeTarefasSelecionada = {id: null, nome:"Agenda de Tarefas", tarefas:[]};
 
 	$scope.prioridades = [];
 
@@ -206,6 +206,25 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			$scope.listaDeTarefasSelecionada = response.data;
 			$scope.listasDeTarefas.push(response.data);
 			delete $scope.listaDeTarefas;
+			
+			console.log(response.status);
+			console.log(response.data);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.adicionarSubTarefa = function(tarefa, subtarefa) {
+		
+		subtarefa.concluida = false;
+		
+		$http({method:'POST', url:'http://localhost:8080/listas/tarefa/' + tarefa.id, data: subtarefa})
+		.then(function(response){
+
+			tarefa.subTarefas.push(response.data);
+			delete $scope.subtarefa;
 			
 			console.log(response.status);
 			console.log(response.data);
