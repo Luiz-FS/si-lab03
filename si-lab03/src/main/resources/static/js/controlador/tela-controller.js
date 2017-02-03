@@ -282,4 +282,56 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			console.log(response.status);
 		})
 	}
+	
+	
+	$scope.alterarSubTarefa = function(tarefa, subTarefa) {
+		$http({method:'PUT', url:'http://localhost:8080/listas/tarefa/subTarefa', data: subTarefa})
+		.then(function(response){
+			
+			verificaSubtarefasConcluidas(tarefa);
+			console.log(response.status);
+			console.log(response.data);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	$scope.deletarSubTarefa = function(tarefa, subTarefa) {
+		$http({method:'DELETE', url:'http://localhost:8080/listas/tarefa/' + tarefa.id + '/' + subTarefa.id})
+		.then(function(response){
+			
+			var index = tarefa.subTarefas.indexOf(subTarefa);
+			
+			tarefa.subTarefas.splice(index, 1);
+			
+			verificaSubtarefasConcluidas(tarefa);
+			console.log(response.status);
+
+		}, function(response){
+			console.log(response.data);
+			console.log(response.status);
+		})
+	}
+	
+	function verificaSubtarefasConcluidas(tarefa) {
+		
+		var concluidas = 0;
+		
+		for (var i = 0; i < tarefa.subTarefas.length; i++) {
+			
+			if (tarefa.subTarefas[i].concluida) {
+				concluidas++;
+			}
+		}
+		
+		if (concluidas == tarefa.subTarefas.length) {
+			tarefa.concluida = true;
+			$scope.alterarTarefa(tarefa);
+		} else {
+			tarefa.concluida = false;
+			$scope.alterarTarefa(tarefa);
+		}
+	}
 });

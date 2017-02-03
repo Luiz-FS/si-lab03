@@ -170,6 +170,7 @@
                      <p>
                     	<span class="atributo">Descrição: </span>
                     	<span  ng-show="!modoEdicao">{{tarefaAtual.comentario}}</span>
+                    	<input type="text" ng-model="tarefaAtual.comentario" ng-show="modoEdicao"/>
                     </p>
                     
                     <p>
@@ -195,7 +196,7 @@
                     		
                     	<table id="tabelaSubtarefas">
                     		
-                    		<tr style="text-align: center;">
+                    		<tr>
                     			<th>Nome</th>
                     			<th>Concluida</th>
                     			<th>Deletar</th>
@@ -203,9 +204,9 @@
                     			
                     		<tr ng-repeat="subtarefa in tarefaAtual.subTarefas">
                     			
-                    			<td>{{subtarefa.descricao}}</td>
-                    			<td><input type="checkbox" ng-model="subtarefa.concluida"/></td>
-                    			<td><button>Deletar</button></td>
+                    			<td style="width: 72%;">{{subtarefa.descricao}}</td>
+                    			<td style="text-align: center;"><input type="checkbox" ng-model="subtarefa.concluida" ng-click="alterarSubTarefa(tarefaAtual, subtarefa)"/></td>
+                    			<td><button ng-click="deletarSubTarefa(tarefaAtual, subtarefa)">Deletar</button></td>
                     		</tr>
                     		
                     	</table>
@@ -220,6 +221,7 @@
                     <p>
                     	<span class="atributo">Categoria: </span>
                     	<span  ng-show="!modoEdicao">{{tarefaAtual.categoria}}</span>
+                    	<input type="text" ng-model="tarefaAtual.categoria" ng-show="modoEdicao"/>
                     </p>
 
                     <div id="botoes">
