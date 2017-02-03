@@ -91,7 +91,7 @@
 
                 <div id="controladorDeTarefas">
                 
-                	<select class="form-control listas" ng-model="listaDeTarefasSelecionada" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
+                	<select class="form-control listas" ng-model="listaDeTarefasSelecionada" ng-click="atualizaCategorias()" ng-options="lista.nome for lista in listasDeTarefas" ng-required="true">	
 
                     	<option value="" disabled="disabled">Listas de tarefas...</option>
 
@@ -104,11 +104,23 @@
                         <option value="">Filtrar por...</option>
 
                     </select>
+                    
+                    <select class="form-control" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
+
+                        <option value="">Ordenar por...</option>
+
+                    </select>
+                    
+                    <select class="form-control" ng-model="selCategoria" ng-options="categoria for categoria in categorias">
+
+                        <option value="">Filtrar por...</option>
+
+                    </select>
 
                     <div id="box">
 
-                        <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao: criterioDeBusca}
-                            | filter:{concluida: filtroTarefas(select)}">
+                        <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao:criterioDeBusca}
+                            | filter:{concluida:filtroTarefas(select)} | filter:{categoria:selCategoria}">
 
                             <div ng-class="{concluida: tarefa.concluida, naoConcluida: !tarefa.concluida}">
 
@@ -215,7 +227,7 @@
                     
                     <p>
                     	<span class="atributo">Concluida: </span>
-                    	<input type="checkbox" ng-model="tarefaAtual.concluida" ng-disabled="!modoEdicao"/>
+                    	<input type="checkbox" ng-click="marcarOudesmarcarConcluida(tarefaAtual)" ng-disabled="!modoEdicao"/>
                     </p>
                     
                     <p>

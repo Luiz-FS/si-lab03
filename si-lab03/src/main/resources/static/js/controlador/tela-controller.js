@@ -11,6 +11,8 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		{filtro: "Concluidas"},
 		{filtro: "Não concluidas"}
 		];
+	
+	$scope.categorias = [];
 
 	$scope.listasDeTarefas = [];
 
@@ -19,6 +21,22 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.MAXIMO_PERCENTUAL = 100;
 	
 	$scope.modoEdicao = false;
+	
+	$scope.atualizaCategorias = function() {
+
+		var categorias = [];
+		
+		for (var i = 0; i < $scope.listaDeTarefasSelecionada.tarefas.length; i++) {
+			
+			var categoria = $scope.listaDeTarefasSelecionada.tarefas[i].categoria;
+			
+			if ((categorias.indexOf(categoria) === -1) && (categoria != null)) {
+				categorias.push(categoria);
+			}
+		}
+		
+		$scope.categorias = categorias;
+	}
 
 	$scope.adicionaTarefa = function (tarefa) {
 
@@ -92,11 +110,21 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 		if (tarefa.concluida) {
 			tarefa.concluida = false;
+			marcarSubtarefasConcluidas(tarefa, false);
 		} else {
 			tarefa.concluida = true;
+			marcarSubtarefasConcluidas(tarefa, true);
 		}
 		
 		$scope.alterarTarefa(tarefa);
+	}
+	
+	var marcarSubtarefasConcluidas = function(tarefa, concluir) {
+		
+		for (var i = 0; i < tarefa.subTarefas.length; i++) {
+			
+			tarefa.subTarefas[i].concluida = concluir;
+		}
 	}
 
 	var getIndexTarefa = function (tarefa) {
