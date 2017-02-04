@@ -21,6 +21,35 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.MAXIMO_PERCENTUAL = 100;
 	
 	$scope.modoEdicao = false;
+
+	$scope.ordenarPor = "prioridade";
+
+	$scope.ordenar = function (value1, value2) {
+
+	    if ($scope.ordenarPor === "prioridade") {
+	        return ordenarPorPrioridade(value1,value2);
+        } else if ($scope.ordenarPor === "nome")
+            ordenarPorNome(tarefa1,tarefa2);
+
+    }
+
+	function ordenarPorPrioridade(value1, value2) {
+
+	    if (value1.value === "ALTA")
+	        return -1;
+	    else if (value2.value === "ALTA")
+	        return 1;
+	    else if (value1.value === "MEDIA")
+	        return -1;
+	    else if (value2.value === "MEDIA")
+	        return 1;
+	    else
+	        return -1;
+    }
+
+    function ordenarPorNome(value1, value2) {
+        return (value1.value < value2.value) ? -1 : 1;
+    }
 	
 	$scope.atualizaCategorias = function() {
 
@@ -110,16 +139,16 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 		if (tarefa.concluida) {
 			tarefa.concluida = false;
-			marcarSubtarefasConcluidas(tarefa, false);
+			$scope.marcarSubtarefasConcluidas(tarefa, false);
 		} else {
 			tarefa.concluida = true;
-			marcarSubtarefasConcluidas(tarefa, true);
+            $scope.marcarSubtarefasConcluidas(tarefa, true);
 		}
 		
 		$scope.alterarTarefa(tarefa);
 	}
 	
-	var marcarSubtarefasConcluidas = function(tarefa, concluir) {
+	$scope.marcarSubtarefasConcluidas = function(tarefa, concluir) {
 		
 		for (var i = 0; i < tarefa.subTarefas.length; i++) {
 			

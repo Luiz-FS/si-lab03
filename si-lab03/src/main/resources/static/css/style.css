@@ -196,7 +196,7 @@
     padding-bottom: 7px;
     overflow: auto;
     border: groove;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -305,12 +305,33 @@
     margin-right: 10px;
 }
 
+.filtroCateg {
+    width: 48%;
+    float: right;
+    margin-right: 10px;
+}
+
+.ordenar {
+    width: 48%;
+    float: left;
+    margin-left: 10px;
+}
+
 .busca {
 
     width: 48%;
     float: left;
     margin-left: 10px;
     margin-bottom: 5px;
+}
+
+.estatisticas {
+    background-color: white;
+    margin-top: 100px;
+    width: 97%;
+    height: 40px;
+    margin-left: 10px;
+    border: groove;
 }
 
 .visualizacao {

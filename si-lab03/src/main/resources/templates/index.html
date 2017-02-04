@@ -97,30 +97,39 @@
 
                   	</select>
 
-                    <input class="form-control busca" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
+                    <div>
+                        <input class="form-control busca" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
 
-                    <select class="form-control filtro" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
+                        <select class="form-control filtro" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
 
-                        <option value="">Filtrar por...</option>
+                            <option value="" disabled="disabled">Filtrar por conclusão...</option>
 
-                    </select>
-                    
-                    <select class="form-control" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
+                        </select>
+                    </div>
 
-                        <option value="">Ordenar por...</option>
+                    <div style="margin-bottom: 10px; margin-top: 55px">
 
-                    </select>
-                    
-                    <select class="form-control" ng-model="selCategoria" ng-options="categoria for categoria in categorias">
+                        <select class="form-control ordenar" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
 
-                        <option value="">Filtrar por...</option>
+                            <option value="">Ordenar por...</option>
 
-                    </select>
+                        </select>
+
+                        <select class="form-control filtroCateg" ng-model="selCategoria" ng-options="categoria for categoria in categorias">
+
+                            <option value="">Filtrar por categoria...</option>
+
+                        </select>
+                    </div>
+
+                    <div class="estatisticas">
+                        Aqui vai as estatisticas de tarefa
+                    </div>
 
                     <div id="box">
 
                         <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao:criterioDeBusca}
-                            | filter:{concluida:filtroTarefas(select)} | filter:{categoria:selCategoria}">
+                            | filter:{concluida:filtroTarefas(select)} | filter:{categoria:selCategoria} | orderBy:'prioridade':false:ordenar">
 
                             <div ng-class="{concluida: tarefa.concluida, naoConcluida: !tarefa.concluida}">
 
@@ -227,7 +236,7 @@
                     
                     <p>
                     	<span class="atributo">Concluida: </span>
-                    	<input type="checkbox" ng-click="marcarOudesmarcarConcluida(tarefaAtual)" ng-disabled="!modoEdicao"/>
+                    	<input type="checkbox" ng-model="tarefaAtual.concluida" ng-click="marcarSubtarefasConcluidas(tarefaAtual, tarefaAtual.concluida)" ng-disabled="!modoEdicao"/>
                     </p>
                     
                     <p>
