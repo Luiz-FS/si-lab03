@@ -63,7 +63,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 				categorias.push(categoria);
 			}
 		}
-		
+
 		$scope.categorias = categorias;
 	}
 
