@@ -51,9 +51,17 @@
                     			</div>
                     			<button class="acordeon" ng-click="deletarListaTarefas(listaDeTarefasSelecionada)">Remover lista atual</button><br/>
                     			<button class="acordeon" ng-click="deletarTodasAsListas()">Remover Todas as listas</button>
-                    			
+
                     		</div>
                     	</div>
+                    </li>
+                    <li>
+                        <div id="progresso">
+                            <button id="progressoBtn">Progresso</button>
+                            <div id="progressoEst">
+                                <p>Total de tarefas a serem concluidas: {{calcQunatTarefasInconcluidas()}}</p>
+                            </div>
+                        </div>
                     </li>
                     <li><a href="https://github.com/Luiz-FS" target="_blank">Sobre</a></li>
                 </ul>
@@ -109,27 +117,29 @@
 
                     <div style="margin-bottom: 10px; margin-top: 55px">
 
-                        <select class="form-control ordenar" ng-model="select" ng-options="filtro.filtro for filtro in tableFilter">
+                        <select class="form-control ordenar" ng-model="ordenarPor" ng-click="selecionarOrdenacao()">
 
-                            <option value="">Ordenar por...</option>
+                            <option value="ordenar" selected="selected" disabled="disabled">Ordenar por...</option>
+                            <option label="Prioridade" value="prioridade">Prioridade</option>
+                            <option label="Nome" value="descricao">Nome</option>
 
                         </select>
 
                         <select class="form-control filtroCateg" ng-model="selCategoria" ng-options="categoria for categoria in categorias">
 
-                            <option value="">Filtrar por categoria...</option>
+                            <option value="" disabled="disabled">Filtrar por categoria...</option>
 
                         </select>
                     </div>
 
                     <div class="estatisticas">
-                        Aqui vai as estatisticas de tarefa
+                        <span>Tarefas concluidas: {{calculaQuantTarefasFiltro(selCategoria, true)}}</span> <span>Tarefas não concluidas: {{calculaQuantTarefasFiltro(selCategoria, false)}}</span>
                     </div>
 
                     <div id="box">
 
                         <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao:criterioDeBusca}
-                            | filter:{concluida:filtroTarefas(select)} | filter:{categoria:selCategoria} | orderBy:'prioridade':false:ordenar">
+                            | filter:{concluida:filtroTarefas(select)} | filter:{categoria:filtroCategorias(selCategoria)} | orderBy:ordenarPor:false:ordenar">
 
                             <div ng-class="{concluida: tarefa.concluida, naoConcluida: !tarefa.concluida}">
 

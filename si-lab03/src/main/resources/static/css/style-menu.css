@@ -99,7 +99,6 @@ button.acordeon.ativo, button.acordeon:hover {
 
 div.painel {
 	padding: 0 18px;
-	background-color: white;
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
@@ -126,3 +125,40 @@ button.alteraLista.ativo:after {
 	content: "\2796"; /*Caractere (-) no código unicode*/
 }
 
+#progressoBtn {
+
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 16px;
+	border: none;
+	outline: none;
+}
+
+#progresso {
+	position: relative;
+	display: inline-block;
+}
+
+#progressoEst {
+
+	position: fixed;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	max-width: 253px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.4s ease-out;
+}
+
+#progresso:hover #progressoEst {
+
+	max-height: 60px;
+}
+
+#progresso:hover #progressoBtn {
+	background-color: #3e8e41;
+}

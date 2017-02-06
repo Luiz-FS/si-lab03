@@ -22,16 +22,9 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	
 	$scope.modoEdicao = false;
 
-	$scope.ordenarPor = "prioridade";
+	$scope.ordenarPor = "ordenar";
 
-	$scope.ordenar = function (value1, value2) {
-
-	    if ($scope.ordenarPor === "prioridade") {
-	        return ordenarPorPrioridade(value1,value2);
-        } else if ($scope.ordenarPor === "nome")
-            ordenarPorNome(tarefa1,tarefa2);
-
-    }
+	$scope.ordenar = null;
 
 	function ordenarPorPrioridade(value1, value2) {
 
@@ -47,13 +40,20 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	        return -1;
     }
 
-    function ordenarPorNome(value1, value2) {
-        return (value1.value < value2.value) ? -1 : 1;
+    $scope.selecionarOrdenacao = function () {
+
+		if ($scope.ordenarPor === "prioridade") {
+			$scope.ordenar = ordenarPorPrioridade;
+		} else if ($scope.ordenarPor === "descricao") {
+			$scope.ordenar = null;
+		} else {
+			$scope.ordenar = null;
+		}
     }
 	
 	$scope.atualizaCategorias = function() {
 
-		var categorias = [];
+		var categorias = ["Todas"];
 		
 		for (var i = 0; i < $scope.listaDeTarefasSelecionada.tarefas.length; i++) {
 			
@@ -66,6 +66,56 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		
 		$scope.categorias = categorias;
 	}
+
+	$scope.calculaQuantTarefasFiltro = function (categoria, conclusao) {
+		var quantidadeConclusao = 0;
+
+		if (typeof categoria !== 'undefined' && categoria !== 'Todas' ) {
+
+            for (var i = 0; i < $scope.listaDeTarefasSelecionada.tarefas.length; i++) {
+
+                var tarefa = $scope.listaDeTarefasSelecionada.tarefas[i];
+
+                if (tarefa.categoria === categoria && tarefa.concluida === conclusao) {
+                    quantidadeConclusao++;
+                }
+
+            }
+        } else{
+
+            for (var i = 0; i < $scope.listaDeTarefasSelecionada.tarefas.length; i++) {
+
+                var tarefa = $scope.listaDeTarefasSelecionada.tarefas[i];
+
+                if (tarefa.concluida === conclusao) {
+                    quantidadeConclusao++;
+                }
+            }
+        }
+
+		return quantidadeConclusao;
+    }
+
+    $scope.calcQunatTarefasInconcluidas = function () {
+
+		var quantidade = 0;
+
+		for (var i = 0; i < $scope.listasDeTarefas.length; i++) {
+
+			var listaDeTarefas = $scope.listasDeTarefas[i];
+
+			for (var j = 0; j < listaDeTarefas.tarefas.length; j++) {
+
+				var tarefa = listaDeTarefas.tarefas[j];
+
+				if (tarefa.concluida === false) {
+					quantidade++;
+				}
+			}
+		}
+
+		return quantidade;
+    }
 
 	$scope.adicionaTarefa = function (tarefa) {
 
@@ -134,6 +184,14 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		if (select.filtro == "Concluidas") return true;
 		else if (select.filtro == "Não concluidas") return false;
 	}
+
+    $scope.filtroCategorias = function (categoria) {
+
+        if (categoria == null || categoria == "Todas")
+        	return '';
+        else return categoria;
+
+    }
 
 	$scope.marcarOudesmarcarConcluida = function (tarefa) {
 
@@ -213,6 +271,10 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		.then(function(response){
 
 			$scope.listaDeTarefasSelecionada.tarefas.push(response.data);
+
+			if ($scope.categorias.indexOf(response.data.categoria) == -1) {
+				$scope.categorias.push(response.data.categoria);
+			}
 
 		}, function(response){
 			console.log(response.data);
