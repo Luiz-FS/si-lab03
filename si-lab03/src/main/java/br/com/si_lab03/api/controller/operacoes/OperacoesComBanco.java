@@ -154,7 +154,7 @@ public class OperacoesComBanco {
 	
 		if (listaEncontrada != null) {
 	
-			listaEncontrada.setTarefas(new ArrayList<>());
+			listaEncontrada.getTarefas().clear();
 	
 			listaDeTarefasRepositorio.save(listaEncontrada);
 	

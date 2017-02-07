@@ -172,8 +172,9 @@
 #nomeTarefa {
 
     height: 48px;
-    width: 547px;
+    width: 400px;
     padding-top: 13px;
+    display: inline-block;
 }
 
 #nomeTarefa p {
@@ -182,13 +183,13 @@
     margin-left: 10px;
 
     white-space: nowrap;
-    width: 470px;
+    width: 400px;
     overflow: hidden;
     text-overflow: ellipsis;
 
 }
 
-#box {
+#caixa {
 
     background-color: white;
     height: 300px;
@@ -201,7 +202,7 @@
     margin-right: auto;
 }
 
-#trash {
+#lixeira {
 
     background-color: #9fa497;
     height: 48px;
@@ -219,15 +220,15 @@
 }
 
 
-@keyframes trashAn {
+@keyframes lixeiraAn {
 
     from {background-color: #9fa497}
     to {background-color: #ff5751}
 }
 
-#trash:hover {
+#lixeira:hover {
 
-    animation-name: trashAn;
+    animation-name: lixeiraAn;
     animation-direction: alternate;
     animation-timing-function: linear;
     animation-duration: 0.3s;

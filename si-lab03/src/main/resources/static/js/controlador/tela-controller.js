@@ -272,8 +272,10 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 			$scope.listaDeTarefasSelecionada.tarefas.push(response.data);
 
-			if ($scope.categorias.indexOf(response.data.categoria) == -1) {
+			if ($scope.categorias.indexOf(response.data.categoria) == -1 && response.data.categoria !== null) {
 				$scope.categorias.push(response.data.categoria);
+			} else if (response.data.categoria === null) {
+                response.data.categoria = '';
 			}
 
 		}, function(response){

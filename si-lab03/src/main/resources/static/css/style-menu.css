@@ -44,8 +44,8 @@
 
 #editacaoListaBtn {
 	
-	background-color: #4CAF50;
-    color: white;
+	background-color: #00d7ff;
+    color: black;
 	padding: 10px;
 	cursor: pointer;
 	font-size: 16px;
@@ -72,7 +72,7 @@
 }
 
 #menuEdicao:hover #editacaoListaBtn {
-	background-color: #3e8e41;
+	background-color: #eee;
 }
 
 .txtNome {
@@ -127,8 +127,8 @@ button.alteraLista.ativo:after {
 
 #progressoBtn {
 
-	background-color: #4CAF50;
-	color: white;
+	background-color: #00d7ff;
+	color: black;
 	padding: 10px;
 	cursor: pointer;
 	font-size: 16px;
@@ -160,5 +160,5 @@ button.alteraLista.ativo:after {
 }
 
 #progresso:hover #progressoBtn {
-	background-color: #3e8e41;
+	background-color: #f9f9f9;
 }

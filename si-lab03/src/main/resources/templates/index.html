@@ -59,7 +59,7 @@
                         <div id="progresso">
                             <button id="progressoBtn">Progresso</button>
                             <div id="progressoEst">
-                                <p>Total de tarefas a serem concluidas: {{calcQunatTarefasInconcluidas()}}</p>
+                                <p style="margin: 7px">Total de tarefas a serem concluidas: {{calcQunatTarefasInconcluidas()}}</p>
                             </div>
                         </div>
                     </li>
@@ -133,10 +133,10 @@
                     </div>
 
                     <div class="estatisticas">
-                        <span>Tarefas concluidas: {{calculaQuantTarefasFiltro(selCategoria, true)}}</span> <span>Tarefas não concluidas: {{calculaQuantTarefasFiltro(selCategoria, false)}}</span>
+                        <span style="margin-right: 70px">Tarefas concluidas: {{calculaQuantTarefasFiltro(selCategoria, true)}}</span> <span>Tarefas não concluidas: {{calculaQuantTarefasFiltro(selCategoria, false)}}</span>
                     </div>
 
-                    <div id="box">
+                    <div id="caixa">
 
                         <div id="sombreado" ng-repeat="tarefa in listaDeTarefasSelecionada.tarefas | filter:{descricao:criterioDeBusca}
                             | filter:{concluida:filtroTarefas(select)} | filter:{categoria:filtroCategorias(selCategoria)} | orderBy:ordenarPor:false:ordenar">
@@ -146,12 +146,14 @@
                                 <div id="checkeBox" ng-click="marcarOudesmarcarConcluida(tarefa)"><span class="glyphicon glyphicon-ok" ng-show="tarefa.concluida"></span></div>
 
                                 <div id="nomeTarefa" ng-click="abrirTarefa(tarefa)">
-                                    <p>{{tarefa.descricao}}</p>
+                                    <p id="descricao">{{tarefa.descricao}}</p>
                                 </div>
+
+                                <span style="float: right; margin: 13px 10px auto">{{tarefa.prioridade}}</span>
 
                             </div>
 
-                            <div id="trash" ng-click="remove(tarefa)">
+                            <div id="lixeira" ng-click="remove(tarefa)">
                                 <span class="glyphicon glyphicon-trash remover"></span>
                             </div>
 
@@ -228,16 +230,16 @@
                     	<table id="tabelaSubtarefas">
                     		
                     		<tr>
-                    			<th>Nome</th>
+                    			<th style="width: 76%;">Nome</th>
                     			<th>Concluida</th>
                     			<th>Deletar</th>
                     		</tr>
                     			
                     		<tr ng-repeat="subtarefa in tarefaAtual.subTarefas">
                     			
-                    			<td style="width: 72%;">{{subtarefa.descricao}}</td>
+                    			<td>{{subtarefa.descricao}}</td>
                     			<td style="text-align: center;"><input type="checkbox" ng-model="subtarefa.concluida" ng-click="alterarSubTarefa(tarefaAtual, subtarefa)"/></td>
-                    			<td><button ng-click="deletarSubTarefa(tarefaAtual, subtarefa)">Deletar</button></td>
+                    			<td><button class="cancelar" ng-click="deletarSubTarefa(tarefaAtual, subtarefa)">Deletar</button></td>
                     		</tr>
                     		
                     	</table>
