@@ -70,7 +70,7 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 	$scope.calculaQuantTarefasFiltro = function (categoria, conclusao) {
 		var quantidadeConclusao = 0;
 
-		if (typeof categoria !== 'undefined' && categoria !== 'Todas' ) {
+		if (typeof categoria !== 'undefined' && categoria !== 'Todas' && categoria !== null) {
 
             for (var i = 0; i < $scope.listaDeTarefasSelecionada.tarefas.length; i++) {
 
@@ -327,9 +327,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			$scope.listaDeTarefasSelecionada = response.data;
 			$scope.listasDeTarefas.push(response.data);
 			delete $scope.listaDeTarefas;
-			
-			console.log(response.status);
-			console.log(response.data);
 
 		}, function(response){
 			console.log(response.data);
@@ -346,9 +343,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 
 			tarefa.subTarefas.push(response.data);
 			delete $scope.subtarefa;
-			
-			console.log(response.status);
-			console.log(response.data);
 
 		}, function(response){
 			console.log(response.data);
@@ -364,8 +358,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			
 			$scope.listasDeTarefas.splice(index, 1);
 			$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
-			
-			console.log(response.status);
 
 		}, function(response){
 			console.log(response.data);
@@ -379,8 +371,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			
 			$scope.listasDeTarefas = [];
 			$scope.listaDeTarefasSelecionada = {nome:"Agenda de Tarefas", tarefas:[]};
-			
-			console.log(response.status);
 
 		}, function(response){
 			console.log(response.data);
@@ -393,9 +383,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		.then(function(response){
 			
 			$scope.listaDeTarefasSelecionada.nome = response.data.nome;
-			
-			console.log(response.status);
-			
 			delete $scope.novoNome;
 
 		}, function(response){
@@ -410,8 +397,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 		.then(function(response){
 			
 			verificaSubtarefasConcluidas(tarefa);
-			console.log(response.status);
-			console.log(response.data);
 
 		}, function(response){
 			console.log(response.data);
@@ -428,7 +413,6 @@ app.controller("agendaDetarefasCtrl", function ($scope, $http) {
 			tarefa.subTarefas.splice(index, 1);
 			
 			verificaSubtarefasConcluidas(tarefa);
-			console.log(response.status);
 
 		}, function(response){
 			console.log(response.data);

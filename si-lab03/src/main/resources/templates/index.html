@@ -13,7 +13,6 @@
         <script src="./js/controlador/tela-controller.js"></script>
         <script src="./js/controlador/menu-controller.js"></script>
 
-
         <link rel="stylesheet" href="./css/bootstrap.css"/>
         <link rel="stylesheet" href="./css/style.css"/>
         <link rel="stylesheet" href="./css/style-menu.css"/>
@@ -63,7 +62,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="https://github.com/Luiz-FS" target="_blank">Sobre</a></li>
+                    <li><a href="https://github.com/Luiz-FS/si-lab03" target="_blank">Sobre</a></li>
                 </ul>
 
             </nav>
@@ -238,7 +237,7 @@
                     		<tr ng-repeat="subtarefa in tarefaAtual.subTarefas">
                     			
                     			<td>{{subtarefa.descricao}}</td>
-                    			<td style="text-align: center;"><input type="checkbox" ng-model="subtarefa.concluida" ng-click="alterarSubTarefa(tarefaAtual, subtarefa)"/></td>
+                    			<td style="text-align: center;"><input type="checkbox" style="width: 15px; height: 15px;" ng-model="subtarefa.concluida" ng-click="alterarSubTarefa(tarefaAtual, subtarefa)"/></td>
                     			<td><button class="cancelar" ng-click="deletarSubTarefa(tarefaAtual, subtarefa)">Deletar</button></td>
                     		</tr>
                     		
@@ -248,7 +247,7 @@
                     
                     <p>
                     	<span class="atributo">Concluida: </span>
-                    	<input type="checkbox" ng-model="tarefaAtual.concluida" ng-click="marcarSubtarefasConcluidas(tarefaAtual, tarefaAtual.concluida)" ng-disabled="!modoEdicao"/>
+                    	<input type="checkbox" style="width: 15px; height: 15px;" ng-model="tarefaAtual.concluida" ng-click="marcarSubtarefasConcluidas(tarefaAtual, tarefaAtual.concluida)" ng-disabled="!modoEdicao"/>
                     </p>
                     
                     <p>
